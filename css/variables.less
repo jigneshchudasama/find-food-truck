@@ -1,0 +1,29 @@
+// Colors
+@red: #FC4B50;
+
+// Font Family
+@brand-font: 'Poppins', sans-serif;
+
+// Mixins
+.placeholder(@color, @font-size, @font-weight) {
+	::-webkit-input-placeholder {
+		color: @color;
+		font-size: @font-size;
+		font-weight: @font-weight;
+	}
+	::-moz-placeholder {
+		color: @color;
+		font-size: @font-size;
+		font-weight: @font-weight;
+	}
+	:-ms-input-placeholder {
+		color: @color;
+		font-size: @font-size;
+		font-weight: @font-weight;
+	}
+	:-moz-placeholder {
+		color: @color;
+		font-size: @font-size;
+		font-weight: @font-weight;
+	}
+}
