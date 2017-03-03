@@ -28,6 +28,12 @@
             loadBindings: function() {
                 var thisApp = this;
 
+                // Trigger a click event on each marker when the corresponding marker link is clicked
+
+                $('body').on('click', '.food-truck-info', function() {
+                    google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
+                });
+
                 $('#range-bar').on('change', function() {
                     document.getElementById("range").innerHTML = this.value + ' Meter';
                     gb_radius = parseInt(this.value);
@@ -51,7 +57,10 @@
                     event.preventDefault();
                     $('#pac-input').val('');
                     $('#food-item').val('');
-                    thisApp.noDataFound(0,0);
+                    document.getElementById("range-bar").value = 500;
+                    document.getElementById("range").innerHTML = '500 Meter';
+                    gb_radius = parseInt(500);
+                    thisApp.noDataFound(0,0, gb_radius);
                 });
 
                 map = new google.maps.Map(document.getElementById('map'), {
@@ -102,6 +111,7 @@
                 }).done(function(data) {
                     console.log("Retrieved " + data.length + " records from the dataset!");
                     if (data.length > 0) {
+                        searchedTerm = $('#food-item').val().toLowerCase();
                         if (searchedTerm) {
                             var filteredData = $.grep(data, function (e) {
                                 if (e.fooditems) {
@@ -148,6 +158,7 @@
                                 title: name,
                                 zIndex: 1,
                                 html: contentString,
+                                marker_id: n,
                                 icon: marker_image_path,
                             });
 
@@ -156,13 +167,19 @@
                         bounds.extend(marker.position);
 
                         google.maps.event.addListener(marker, 'click', function () {
+                            $('.food-truck-info').removeClass('active');
+                            $('#marker-'+this.marker_id).addClass('active');
                             infowindow.setContent(this.html);
                             infowindow.open(map, this);
                         });
 
+                        google.maps.event.addListener(infowindow,'closeclick',function(){
+                            $('.food-truck-info').removeClass('active');
+                        });
+
                         // Add data into the search result box
 
-                        $('.search-results').append('<div class="food-truck-info"><h3 class="applicant">'+name+'</h3><p class="fooditems"><span>Food Items:</span>'+fooditems+'</h3><p class="dayshours"><span>Working Hours:</span>'+dayshours+'</h3><p class="address"> <span>Address:</span> '+address+'</h3></div>')
+                        $('.search-results').append('<div class="food-truck-info" data-markerid="'+n+'" id="marker-'+n+'"><h3 class="applicant">'+name+'</h3><p class="fooditems"><span>Food Items:</span>'+fooditems+'</h3><p class="dayshours"><span>Working Hours:</span>'+dayshours+'</h3><p class="address"> <span>Address:</span> '+address+'</h3></div>')
                     }
 
                     map.fitBounds(bounds);

@@ -111,20 +111,25 @@ body {
 		.search-results {
 		    overflow-y: auto;
 		    padding: 0 20px;
-		    .applicant {
-		    	color: @red;
-		    	text-transform: uppercase;
-		    	&.no-result {
-		    		text-align: center;
+		    .food-truck-info {
+		    	&.active {
+		    		border: 1px solid red;
 		    	}
-		    }
-		    p {
-		    	margin: 0;
-		    	span {
-		    		margin-right: 5px;
-				    font-weight: 700;
-				    text-transform: uppercase;
-		    	}
+			    .applicant {
+			    	color: @red;
+			    	text-transform: uppercase;
+			    	&.no-result {
+			    		text-align: center;
+			    	}
+			    }
+			    p {
+			    	margin: 0;
+			    	span {
+			    		margin-right: 5px;
+					    font-weight: 700;
+					    text-transform: uppercase;
+			    	}
+			    }
 		    }
 		}
 	}
