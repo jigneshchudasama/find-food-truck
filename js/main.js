@@ -38,10 +38,17 @@
                 // Trigger search on button click
                 $('#search-your-places').on('click', function(event) {
                     var input = document.getElementById('pac-input');
-                    google.maps.event.trigger(input, 'focus')
-                    google.maps.event.trigger(input, 'keydown', {
-                        keyCode: 13
-                    });
+
+                    if (!!$('#pac-input').val()) {
+                        $('#places-filter').removeClass('error');
+                        google.maps.event.trigger(input, 'focus')
+                        google.maps.event.trigger(input, 'keydown', {
+                            keyCode: 13
+                        });
+                    } else {
+                        $('#places-filter').addClass('error');
+                    }
+                    
                 });
 
                 $('#reset').on('click', function(event) {
@@ -62,10 +69,18 @@
 
                 $('#food-filter').submit(function(event) {
                     event.preventDefault();
-                    if (!!$('#pac-input').val()) {
-                        thisApp.loadData(gb_latitude, gb_longitude, gb_radius, $('#food-item').val().toLowerCase());
+
+                    if (!!$('#food-item').val()) {
+                        if (!!$('#pac-input').val()) {
+                            $('#food-filter').removeClass('error');
+                            thisApp.loadData(gb_latitude, gb_longitude, gb_radius, $('#food-item').val().toLowerCase());
+                        } else {
+                            $('#food-filter').addClass('error');
+                            $('#food-filter .error-message').text('Please enter location name first');
+                        }
                     } else {
-                        alert('Please Select Place')
+                        $('#food-filter').addClass('error');
+                        $('#food-filter .error-message').text('Please enter dish name');
                     }
                 });
 
@@ -277,6 +292,7 @@
                 // Listen for the event fired when the user selects a place.
                 searchBox.addListener('places_changed', function() {
                     var places = searchBox.getPlaces();
+                    $('#places-filter').removeClass('error');
 
                     if (places.length == 0) {
                         return;
