@@ -51,7 +51,7 @@
                     
                 });
 
-                $('#reset').on('click', function(event) {
+                $('#reset, #reset-all').on('click', function(event) {
                     event.preventDefault();
                     $('#pac-input').val('');
                     $('#food-item').val('');
@@ -59,6 +59,8 @@
                     document.getElementById("range").innerHTML = '500 Meters';
                     gb_radius = parseInt(500);
                     thisApp.noDataFound(default_latitude,gb_longitude, gb_radius);
+                    $('#food-filter').removeClass('error');
+                    $('#places-filter').removeClass('error');
                 });
 
                 $('#range-bar').on('change', function() {
@@ -86,18 +88,10 @@
 
                 $('#clear-food-items').on('click', function(event) {
                     event.preventDefault();
+                    $('#food-filter').removeClass('error');
+                    $('#places-filter').removeClass('error');
                     $('#food-item').val('');
                     thisApp.loadData(gb_latitude, gb_longitude, gb_radius);
-                });
-
-                $('#reset-all').on('click', function(event) {
-                    event.preventDefault();
-                    $('#pac-input').val('');
-                    $('#food-item').val('');
-                    document.getElementById("range-bar").value = 500;
-                    document.getElementById("range").innerHTML = '500 Meters';
-                    gb_radius = parseInt(500);
-                    thisApp.noDataFound(default_latitude,gb_longitude, gb_radius);
                 });
 
                 map = new google.maps.Map(document.getElementById('map'), {
