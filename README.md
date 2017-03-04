@@ -3,8 +3,10 @@ Find Food Truck
 
 Food-Truck finder
 
-![alt text](https://raw.github.com/rajeshsegu/food-truck/master/public/img/Uber%20FoodTruck.png "Uber Food Truck Screenshot")
-
+(https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-1.jpg)
+(https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-2.jpg)
+(https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-3.jpg)
+(https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-4.jpg)
 
 
 User Experience:
@@ -18,7 +20,7 @@ User Experience:
 4. Option to filter data based on food items and distance.
 5. On click of the marker, scroll to the particular search result in search result area.
 
-TECHNOLGIES
+TECHNOLOGIES
 ======
 
 Frontend - jQuery, Google Maps API & mCustomscrollbar
