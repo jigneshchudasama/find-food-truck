@@ -28,9 +28,16 @@
             loadBindings: function() {
                 var thisApp = this;
 
+                $(".right-content").mCustomScrollbar();
+
                 // Trigger a click event on each marker when the corresponding marker link is clicked
                 $('body').on('click', '.food-truck-info', function() {
                     google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
+
+
+
+
+
                 });
 
                 // Trigger search on button click
@@ -66,9 +73,7 @@
                     document.getElementById("range-bar").value = 500;
                     document.getElementById("range").innerHTML = '500 Meter';
                     gb_radius = parseInt(500);
-                    gb_latitude = 0;
-                    gb_longitude = 0;
-                    thisApp.noDataFound(0,0, gb_radius);
+                    thisApp.noDataFound(default_latitude,gb_longitude, gb_radius);
                 });
 
                 map = new google.maps.Map(document.getElementById('map'), {
@@ -229,6 +234,16 @@
                             $('#marker-'+this.marker_id).addClass('active');
                             infowindow.setContent(this.html);
                             infowindow.open(map, this);
+
+
+                            $(".right-content").mCustomScrollbar("scrollTo", $('#marker-'+ this.marker_id), {
+
+                                // scroll as soon as clicked
+                                timeout:0,
+
+                                // scroll duration
+                                scrollInertia:200,
+                            });
                         });
 
                         google.maps.event.addListener(infowindow,'closeclick',function(){
@@ -283,12 +298,8 @@
             },
 
             dynamicHeightToElements: function() {
-                $('body').css({
-                   'min-height' : $(window).height()
-                });
-
-                $('#search-result .search-results').css({
-                   'height' : $(window).height() - ( $('.action-buttons').outerHeight() + $('.title-wrapper').outerHeight() )
+                $('.right-content').css({
+                   'height' : $(window).height()
                 });
             },
 

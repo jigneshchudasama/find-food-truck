@@ -15,6 +15,7 @@ module.exports = function(grunt) {
       dist: {
         src: ['js/jquery-3.1.1.min.js',
               'js/less.js',
+              'js/jquery.mCustomScrollbar.js',
               'js/main.js'],
         dest: 'js/main.min.js'
       }
