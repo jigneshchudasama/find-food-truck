@@ -5,31 +5,35 @@
   <link rel="shortcut icon" type="image/png" href="images/marker.png"/>
 
   <!-- CSS -->
+  <!-- <link  rel="stylesheet" type="text/css" href="css/main.min.css"> -->
   <link  rel="stylesheet/less" type="text/css" href="css/main.less">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
 </head> 
 
 <body>
 	<div class="left-content">
-		<div id="map" style="width: 100%; height:100%;"></div>
+		<div id="map" style="width: 100%; height:100%;">test</div>
 	</div>
 
 	<div class="right-content">
 		<div class="action-buttons">
-			<h1>Find Food Truck</h1>
+			<h1 class="logo">Find Food Truck</h1>
 
 			<div class="right-content-inner-wrapper">
 				<!-- Google Search Box -->
-				<h3>Searh places</h3>
+				<h3>Searh places <a href="#" id="reset">Reset All</a></h3>
 				<form id="places-filter" class="clearfix">
-					<input id="pac-input" class="controls" type="text" placeholder="Search Box" required>
+					<input id="pac-input" class="controls" type="text" placeholder="Enter location to start the search" required>
 					<button id="search-your-places">Go</button>
 				</form>
 
 				<!-- Custom Seach Box for food items -->
-				<h3>Search your food items</h3>
+				<h3>Search your food items 
+					<span id="help" title="Use ',' to seperate OR condition, Use '+' to seperate OR condition, Use '+' to seperate OR condition"></span>
+				</h3>
 				<form id="food-filter" class="clearfix">
-					<input id="food-item" class="controls" type="text" placeholder="Search Your food" required>
+					<input id="food-item" class="controls" type="text" placeholder="Enter dish name map it" required>
 					<button id="search-your-food">Go</button>
 					<a href="#" id="clear-food-items">clear</a>
 				</form>
@@ -37,24 +41,24 @@
 				<!-- Range Bar to adjust the radius -->
 				<h3>Adjust your radius</h3>
 				<input id="range-bar" type="range" min="50" step="50" value="500" max="1000" />
-				<span id="range">500 Meter</span>
+				<span id="range">500 Meters</span>
 				
-				<a href="#" id="reset">Reset All</a>
 			</div>
 		</div>
 
 		<div id="search-result">
 			<div class="title-wrapper">
-				<H1>Search Result</H1>
-				<!-- <h5>Location: <span id="location-name">San Fransicso</span></h5> -->
+				<h1 class="search red">Search Results</h1>
 			</div>
 			<div class="search-results"></div>
 		</div>
 		
 	</div>
 
+
 	<!-- JS -->
   	<script src="https://maps.google.com/maps/api/js?key=AIzaSyD0FM-n0YqJLODxujxMzhK3mfIx3hTKqCo&libraries=places"></script>
+  	<!-- <script src="js/main.min.js"></script> -->
 	<script src="js/jquery-3.1.1.min.js"></script>
 	<script src="js/jquery.mCustomScrollbar.js"></script>
 	<script src="js/less.js"></script>

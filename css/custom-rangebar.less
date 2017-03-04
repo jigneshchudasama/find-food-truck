@@ -1,0 +1,91 @@
+input[type=range] {
+	-webkit-appearance: none;
+	margin: 10px 0;
+	width: 260px;
+	&:focus {
+		outline: none;
+		&::-webkit-slider-runnable-track {
+			background: white;
+		}
+		&::-ms-fill-lower {
+			background: white;
+		}
+		&::-ms-fill-upper {
+			background: white;
+		}
+	}
+	&::-webkit-slider-runnable-track {
+		width: 100%;
+		height: 2px;
+		cursor: pointer;
+		animate: 0.2s;
+		box-shadow: 0px 0px 0px #000000;
+		background: white;
+		border-radius: 1px;
+		border: 0px solid #000000;
+	}
+
+	&::-moz-range-track {
+		width: 100%;
+		height: 2px;
+		cursor: pointer;
+		animate: 0.2s;
+		box-shadow: 0px 0px 0px #000000;
+		background: white;
+		border-radius: 1px;
+		border: 0px solid #000000;
+	}
+	
+	&::-ms-track {
+		width: 100%;
+		height: 2px;
+		cursor: pointer;
+		animate: 0.2s;
+		background: transparent;
+		border-color: transparent;
+		color: transparent;
+	}
+
+	&::-ms-fill-lower {
+		background-image: url(images/range.png);
+		border: 0px solid #000000;
+		border-radius: 2px;
+		box-shadow: 0px 0px 0px #000000;
+	}
+
+	&::-ms-fill-upper {
+		background-image: url(images/range.png);
+		border: 0px solid #000000;
+		border-radius: 2px;
+		box-shadow: 0px 0px 0px #000000;
+	}
+
+	&::-ms-thumb {
+		box-shadow: 0px 0px 0px #000000;
+		height: 18px;
+		width: 18px;
+		border-radius: 25px;
+		background-image: url(images/range.png);
+		cursor: pointer;
+	}
+
+	&::-webkit-slider-thumb {
+		box-shadow: 0px 0px 0px #000000;
+		height: 18px;
+		width: 18px;
+		border-radius: 25px;
+		background-image: url(images/range.png);
+		cursor: pointer;
+		-webkit-appearance: none;
+		margin-top: -7px;
+	}
+
+	&::-moz-range-thumb {
+		box-shadow: 0px 0px 0px #000000;
+		height: 18px;
+		width: 18px;
+		border-radius: 25px;
+		background-image: url(images/range.png);
+		cursor: pointer;
+	}
+}

@@ -16,7 +16,7 @@
             external_api_url = 'https://data.sfgov.org/resource/6a9r-agq8.json',
             api_app_token = '9ZEHHKeYSdawREJxAjKXmWvhn',
             google_app_key = 'AIzaSyD0FM-n0YqJLODxujxMzhK3mfIx3hTKqCo',
-            default_zoom_level = 5,
+            default_zoom_level = 3,
             marker_image_path = 'images/marker.png';
 
         FoodTruckDemo = {
@@ -33,11 +33,6 @@
                 // Trigger a click event on each marker when the corresponding marker link is clicked
                 $('body').on('click', '.food-truck-info', function() {
                     google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
-
-
-
-
-
                 });
 
                 // Trigger search on button click
@@ -50,7 +45,7 @@
                 });
 
                 $('#range-bar').on('change', function() {
-                    document.getElementById("range").innerHTML = this.value + ' Meter';
+                    document.getElementById("range").innerHTML = this.value + ' Meters';
                     gb_radius = parseInt(this.value);
                     thisApp.loadData(gb_latitude, gb_longitude, gb_radius);
                 });
@@ -71,7 +66,7 @@
                     $('#pac-input').val('');
                     $('#food-item').val('');
                     document.getElementById("range-bar").value = 500;
-                    document.getElementById("range").innerHTML = '500 Meter';
+                    document.getElementById("range").innerHTML = '500 Meters';
                     gb_radius = parseInt(500);
                     thisApp.noDataFound(default_latitude,gb_longitude, gb_radius);
                 });
@@ -122,7 +117,7 @@
                       "$$app_token" : api_app_token
                     },
                     error: function () {
-                        $('.search-results').html('<div class="food-truck-info"><h3 class="applicant no-result">No food trucks found.</div>');
+                        $('.search-results').html('<div class="food-truck-info"><h2 class="applicant no-result">No food trucks found.</h2></div>');
                     }
                 }).done(function(data) {
                     console.log("Retrieved " + data.length + " records from the dataset!");
@@ -212,7 +207,7 @@
                         lat = response[n].latitude;
                         lon = response[n].longitude;
 
-                        var contentString = '<div class="food-truck-info"><h3 class="applicant">'+name+'</h3><p class="fooditems"><span>Food Items: </span>'+fooditems+'</h3><p class="dayshours"><span>Working Hours: </span>'+dayshours+'</h3><p class="address"> <span>Address: </span> '+address+'</h3></div>';
+                        var contentString = '<div class="food-truck-info"><h2 class="applicant">'+name+'</h2><p class="fooditems"><span>Food Items: </span>'+fooditems+'</h3><p class="dayshours"><span>Working Hours: </span>'+dayshours+'</h3><p class="address"> <span>Address: </span> '+address+'</h3></div>';
 
                         var myLatLng = new google.maps.LatLng(lat,lon),
                             marker = new google.maps.Marker({
@@ -237,11 +232,7 @@
 
 
                             $(".right-content").mCustomScrollbar("scrollTo", $('#marker-'+ this.marker_id), {
-
-                                // scroll as soon as clicked
                                 timeout:0,
-
-                                // scroll duration
                                 scrollInertia:200,
                             });
                         });
@@ -252,7 +243,7 @@
 
                         // Add data into the search result box
 
-                        $('.search-results').append('<div class="food-truck-info" data-markerid="'+n+'" id="marker-'+n+'"><h3 class="applicant">'+name+'</h3><p class="fooditems"><span>Food Items:</span>'+fooditems+'</h3><p class="dayshours"><span>Working Hours:</span>'+dayshours+'</h3><p class="address"> <span>Address:</span> '+address+'</h3></div>')
+                        $('.search-results').append('<div class="food-truck-info" data-markerid="'+n+'" id="marker-'+n+'"><h2 class="applicant">'+name+'</h2><p class="fooditems"><span>Food Items:</span>'+fooditems+'</h3><p class="dayshours"><span>Working Hours:</span>'+dayshours+'</h3><p class="address"> <span>Address:</span> '+address+'</h3></div>')
                     }
 
                     map.fitBounds(bounds);
@@ -294,13 +285,17 @@
                     mapTypeId: google.maps.MapTypeId.ROADMAP,
                     styles: map_styles
                 });
-                $('.search-results').html('<div class="food-truck-info"><h3 class="applicant no-result">No food trucks found.</div>');
+                $('.search-results').html('<div class="food-truck-info"><h2 class="applicant no-result">No food trucks found.</h2></div>');
             },
 
             dynamicHeightToElements: function() {
                 $('.right-content').css({
-                   'height' : $(window).height()
+                   'height' : $(window).height(),
+                   'width' : 400
                 });
+                /*$('.left-content').css({
+                   'width' : $(window).width() - 400
+                });*/
             },
 
             identifyCurrentLocationName: function(latitude, longitude) {

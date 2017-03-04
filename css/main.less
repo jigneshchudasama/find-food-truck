@@ -1,5 +1,6 @@
 @import "variables.less";
 @import "style.less";
+@import "custom-rangebar.less";
 @import "jquery.mCustomScrollbar.less";
 
 .clearfix:after {
@@ -19,7 +20,12 @@
 	outline: none;
 }
 
-.placeholder(grey, 14px, 300);
+a,
+a:hover {
+	text-decoration: none;
+}
+
+.placeholder(@grey, 14px, @brand-font, 400);
 
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
