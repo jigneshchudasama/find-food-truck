@@ -23,17 +23,17 @@
 			<div class="right-content-inner-wrapper">
 				<!-- Google Search Box -->
 				<h3>Searh places <a href="#" id="reset">Reset All</a></h3>
-				<form id="places-filter" class="clearfix">
+				<div id="places-filter" class="clearfix form-wrapper">
 					<input id="pac-input" class="controls" type="text" placeholder="Enter location to start the search" required>
 					<button id="search-your-places">Go</button>
-				</form>
+				</div>
 
 				<!-- Custom Seach Box for food items -->
 				<h3>Search your food items 
-					<span id="help" title="Use ',' to seperate OR condition, Use '+' to seperate OR condition, Use '+' to seperate OR condition"></span>
+					<span id="help"><span>You can use “+” to search multiple food trucks containg all the dishes.<br><br>Use “,” to search multiple food trucks contaiaing one of these dishes.<br><br>Eg. Food Name + Food Name” or “Food Name, Food Name”</span></span>
 				</h3>
-				<form id="food-filter" class="clearfix">
-					<input id="food-item" class="controls" type="text" placeholder="Enter dish name map it" required>
+				<form id="food-filter" class="clearfix form-wrapper">
+					<input id="food-item" class="controls" type="text" placeholder="Enter dish name to map it" required>
 					<button id="search-your-food">Go</button>
 					<a href="#" id="clear-food-items">clear</a>
 				</form>
@@ -50,7 +50,10 @@
 			<div class="title-wrapper">
 				<h1 class="search red">Search Results</h1>
 			</div>
-			<div class="search-results"></div>
+			<div id="search-result-inner-wrapper">
+				<div class="search-results"></div>
+			</div>
+			<a href="#" id="reset-all">Reset All</a>
 		</div>
 		
 	</div>

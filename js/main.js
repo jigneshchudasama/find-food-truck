@@ -12,11 +12,11 @@
             // Configuration
             default_latitude = 37.0902,
             default_longitude = -95.7129,
-            map_styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#FC4B50"},{"visibility":"on"}]}],
+            map_styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#eaeaea"},{"visibility":"on"}]}],
             external_api_url = 'https://data.sfgov.org/resource/6a9r-agq8.json',
             api_app_token = '9ZEHHKeYSdawREJxAjKXmWvhn',
             google_app_key = 'AIzaSyD0FM-n0YqJLODxujxMzhK3mfIx3hTKqCo',
-            default_zoom_level = 3,
+            default_zoom_level = 5,
             marker_image_path = 'images/marker.png';
 
         FoodTruckDemo = {
@@ -28,7 +28,7 @@
             loadBindings: function() {
                 var thisApp = this;
 
-                $(".right-content").mCustomScrollbar();
+                $('#search-result-inner-wrapper').mCustomScrollbar();
 
                 // Trigger a click event on each marker when the corresponding marker link is clicked
                 $('body').on('click', '.food-truck-info', function() {
@@ -44,6 +44,16 @@
                     });
                 });
 
+                $('#reset').on('click', function(event) {
+                    event.preventDefault();
+                    $('#pac-input').val('');
+                    $('#food-item').val('');
+                    document.getElementById("range-bar").value = 500;
+                    document.getElementById("range").innerHTML = '500 Meters';
+                    gb_radius = parseInt(500);
+                    thisApp.noDataFound(default_latitude,gb_longitude, gb_radius);
+                });
+
                 $('#range-bar').on('change', function() {
                     document.getElementById("range").innerHTML = this.value + ' Meters';
                     gb_radius = parseInt(this.value);
@@ -52,7 +62,11 @@
 
                 $('#food-filter').submit(function(event) {
                     event.preventDefault();
-                    thisApp.loadData(gb_latitude, gb_longitude, gb_radius, $('#food-item').val().toLowerCase());
+                    if (!!$('#pac-input').val()) {
+                        thisApp.loadData(gb_latitude, gb_longitude, gb_radius, $('#food-item').val().toLowerCase());
+                    } else {
+                        alert('Please Select Place')
+                    }
                 });
 
                 $('#clear-food-items').on('click', function(event) {
@@ -61,7 +75,7 @@
                     thisApp.loadData(gb_latitude, gb_longitude, gb_radius);
                 });
 
-                $('#reset').on('click', function(event) {
+                $('#reset-all').on('click', function(event) {
                     event.preventDefault();
                     $('#pac-input').val('');
                     $('#food-item').val('');
@@ -231,7 +245,7 @@
                             infowindow.open(map, this);
 
 
-                            $(".right-content").mCustomScrollbar("scrollTo", $('#marker-'+ this.marker_id), {
+                            $('#search-result-inner-wrapper').mCustomScrollbar("scrollTo", $('#marker-'+ this.marker_id), {
                                 timeout:0,
                                 scrollInertia:200,
                             });
@@ -290,12 +304,8 @@
 
             dynamicHeightToElements: function() {
                 $('.right-content').css({
-                   'height' : $(window).height(),
-                   'width' : 400
+                   'height' : $(window).height()
                 });
-                /*$('.left-content').css({
-                   'width' : $(window).width() - 400
-                });*/
             },
 
             identifyCurrentLocationName: function(latitude, longitude) {

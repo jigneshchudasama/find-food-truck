@@ -2,6 +2,7 @@ body {
 	margin: 0;
 	font-family: @brand-font;
 	font-weight: 400;
+	overflow: hidden;
 }
 
 .right-content,
@@ -10,16 +11,34 @@ body {
 }
 
 .left-content {
-	width: 75%;
+	width: 100%;
 }
 
 .right-content {
+	position: absolute;
+	right: 0;
 	width: 400px;
 	height: 100%;
 	background: white;
 	border-left: 1px solid white;
     box-sizing: border-box;
     overflow-y: auto;
+
+    #reset-all {
+    	position: fixed;
+	    bottom: 0;
+	    background: @red;
+	    padding: 10px;
+	    font-family: @secondary-font;
+		font-weight: 400;
+	    font-size: 22px;
+	    width: 400px;
+	    color: white;
+	    line-height: 28px;
+	    text-align: center;
+	    right: 0;
+	    box-sizing: border-box;
+    }
 
     h1 {
 		position: relative;
@@ -72,6 +91,45 @@ body {
 		    margin-left: 10px;
 		    position: relative;
 		    top: 2px;
+		    span {
+		    	display: none;
+		    	position: absolute;
+			    width: 210px;
+			    left: -245px;
+			    background: white;
+			    z-index: 100000;
+			    color: red;
+			    text-transform: capitalize;
+			    font-size: 12px;
+			    color: black;
+			    padding: 10px;
+			    line-height: 18px;
+			    top: -25px;
+			    border: 1px solid @grey;
+			    &:after {
+			    	content: '';
+			    	border-top: 10px solid transparent;
+				    border-bottom: 10px solid transparent;
+				    border-left: 10px solid white;
+				    position: absolute;
+				    top: 22px;
+				    right: -10px;
+			    }
+			    &:before {
+			    	content: '';
+			    	border-top: 12px solid transparent;
+				    border-bottom: 12px solid transparent;
+				    border-left: 12px solid @grey;
+				    position: absolute;
+				    top: 20px;
+				    right: -12px;
+			    }
+		    }
+		    &:hover {
+		    	> span {
+		    		display: block;
+		    	}
+		    }
 		}
 	}
 
@@ -92,7 +150,7 @@ body {
 		    float: right;
 		}
 
-		form {
+		.form-wrapper {
 			position: relative;
 			margin-bottom: 30px;
 			#clear-food-items {
@@ -105,7 +163,7 @@ body {
 				text-transform: uppercase;
 				width: 60px;
 				height: 41px;
-				padding: 11px 10px;
+				padding: 13px 10px;
 				text-align: center;
 				box-sizing: border-box;
 			}
@@ -166,6 +224,10 @@ body {
 
 	#search-result {
 		padding: 20px 0;
+		#search-result-inner-wrapper {
+			height: 400px;
+			    padding-bottom: 50px;
+		}
 		.title-wrapper {
 			padding: 20px 20px 0;
 		}
@@ -192,7 +254,7 @@ body {
     	margin: 0 0 5px;
     	span {
     		margin-right: 5px;
-		    color: @grey;
+		    color: @dark-grey;
     	}
     }
 }
