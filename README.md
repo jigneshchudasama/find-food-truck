@@ -3,10 +3,10 @@ Find Food Truck
 
 Food-Truck finder
 
-![alt text](https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-1.jpg "Uber Food Truck Screenshot")
-![alt text](https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-2.jpg "Uber Food Truck Screenshot")
-![alt text](https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-3.jpg "Uber Food Truck Screenshot")
-![alt text](https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-4.jpg "Uber Food Truck Screenshot")
+![alt text](https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-1.jpg "Food Truck Screenshot")
+![alt text](https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-2.jpg "Food Truck Screenshot")
+![alt text](https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-3.jpg "Food Truck Screenshot")
+![alt text](https://s3.ap-south-1.amazonaws.com/find-food-truck/images/image-4.jpg "Food Truck Screenshot")
 
 
 User Experience:
