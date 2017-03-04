@@ -2,16 +2,16 @@
     jQuery(function($) {
 
         var infowindow,
-            gb_latitude,
-            gb_longitude,
+            gb_latitude = 37.0902,
+            gb_longitude = -95.7129,
             gb_radius = 500,
             bounds,
             markers = [],
             map,
 
             // Configuration
-            default_latitude = 0,
-            default_longitude = 0,
+            default_latitude = 37.0902,
+            default_longitude = -95.7129,
             map_styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#FC4B50"},{"visibility":"on"}]}],
             external_api_url = 'https://data.sfgov.org/resource/6a9r-agq8.json',
             api_app_token = '9ZEHHKeYSdawREJxAjKXmWvhn',
@@ -29,9 +29,17 @@
                 var thisApp = this;
 
                 // Trigger a click event on each marker when the corresponding marker link is clicked
-
                 $('body').on('click', '.food-truck-info', function() {
                     google.maps.event.trigger(markers[$(this).data('markerid')], 'click');
+                });
+
+                // Trigger search on button click
+                $('#search-your-places').on('click', function(event) {
+                    var input = document.getElementById('pac-input');
+                    google.maps.event.trigger(input, 'focus')
+                    google.maps.event.trigger(input, 'keydown', {
+                        keyCode: 13
+                    });
                 });
 
                 $('#range-bar').on('change', function() {
@@ -47,10 +55,8 @@
 
                 $('#clear-food-items').on('click', function(event) {
                     event.preventDefault();
-                    if (!!$('#food-item').val()) {
-                        $('#food-item').val('');
-                        thisApp.loadData(gb_latitude, gb_longitude, gb_radius);
-                    }
+                    $('#food-item').val('');
+                    thisApp.loadData(gb_latitude, gb_longitude, gb_radius);
                 });
 
                 $('#reset').on('click', function(event) {
@@ -60,6 +66,8 @@
                     document.getElementById("range-bar").value = 500;
                     document.getElementById("range").innerHTML = '500 Meter';
                     gb_radius = parseInt(500);
+                    gb_latitude = 0;
+                    gb_longitude = 0;
                     thisApp.noDataFound(0,0, gb_radius);
                 });
 
@@ -73,13 +81,13 @@
                 bounds = new google.maps.LatLngBounds();
 
                 setTimeout(function () {
-                    thisApp.filterData(); 
+                    thisApp.loadDataBasedOnUserLocation(); 
                     thisApp.bindSearchBOx(); 
                     thisApp.dynamicHeightToElements(); 
                 }, 500);
             },
 
-            filterData: function() {
+            loadDataBasedOnUserLocation: function() {
                 var thisApp = this;
 
                 if ("geolocation" in navigator) {
@@ -107,18 +115,68 @@
                     type: "GET",
                     data: {
                       "$$app_token" : api_app_token
+                    },
+                    error: function () {
+                        $('.search-results').html('<div class="food-truck-info"><h3 class="applicant no-result">No food trucks found.</div>');
                     }
                 }).done(function(data) {
                     console.log("Retrieved " + data.length + " records from the dataset!");
+
                     if (data.length > 0) {
-                        searchedTerm = $('#food-item').val().toLowerCase();
+                        searchedTerm = $('#food-item').val().trim().toLowerCase();
                         if (searchedTerm) {
-                            var filteredData = $.grep(data, function (e) {
-                                if (e.fooditems) {
-                                    return e.fooditems.indexOf(searchedTerm) > 0;
-                                }
-                            }); 
-                            thisApp.handleData(filteredData);
+
+                            var filteredData = [];
+
+                            // multiple search terms - OR Condition
+                            if (searchedTerm.indexOf(',') >= 0) {
+                                var searchedTermArray = searchedTerm.split(",");
+                                searchedTermArray.forEach(function(st) {
+                                    data.forEach(function(e) {
+                                        if (!!st && e.fooditems && e.fooditems.toLowerCase().indexOf(st.trim()) >= 0 && $.grep(filteredData, function(fd){ return fd.objectid == e.objectid; }).length < 1) {
+                                            filteredData.push(e);
+                                        }
+                                    });
+                                });
+                            }
+
+                            // multiple search terms - AND Condition
+                            if (searchedTerm.indexOf('+') >= 0) {
+                                var available = false;
+                                var searchedTermArray = searchedTerm.split("+");
+
+                                data.forEach(function(e) {
+                                    if (e.fooditems) {
+                                        searchedTermArray.forEach(function(st) {
+                                            if (!!st && e.fooditems.toLowerCase().indexOf(st.trim()) >= 0 && $.grep(filteredData, function(fd){ return fd.objectid == e.objectid; }).length < 1) {
+                                                available = true;
+                                            } else {
+                                                available = false;
+                                                return false;
+                                            }
+                                        });
+                                        if (available == true) {
+                                            filteredData.push(e);
+                                        }
+                                    }
+                                });
+                            }
+                            
+                            // Single search term
+                            if (searchedTerm.indexOf(',') < 0 && searchedTerm.indexOf('+') < 0) {
+                                filteredData = $.grep(data, function (e) {
+                                    if (e.fooditems) {
+                                        return e.fooditems.toLowerCase().indexOf(searchedTerm) >= 0;
+                                    }
+                                });
+                            }
+
+                            if (filteredData.length > 0) {
+                                thisApp.handleData(filteredData);
+                            } else {
+                                thisApp.noDataFound(latitude, longitude);
+                            }
+
                         } else {
                             thisApp.handleData(data);
                         }
