@@ -2,16 +2,16 @@
     jQuery(function($) {
 
         var infowindow,
-            gb_latitude = 37.0902,
-            gb_longitude = -95.7129,
+            gb_latitude = 37.7749295,
+            gb_longitude = -122.4194155,
             gb_radius = 500,
             bounds,
             markers = [],
             map,
 
             // Configuration
-            default_latitude = 37.0902,
-            default_longitude = -95.7129,
+            default_latitude = 37.7749295,
+            default_longitude = -122.4194155,
             map_styles = [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2f2f2"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#eaeaea"},{"visibility":"on"}]}],
             external_api_url = 'https://data.sfgov.org/resource/6a9r-agq8.json',
             api_app_token = '9ZEHHKeYSdawREJxAjKXmWvhn',
@@ -48,7 +48,7 @@
                     } else {
                         $('#places-filter').addClass('error');
                     }
-                    
+
                 });
 
                 $('#reset, #reset-all').on('click', function(event) {
@@ -104,9 +104,9 @@
                 bounds = new google.maps.LatLngBounds();
 
                 setTimeout(function () {
-                    thisApp.loadDataBasedOnUserLocation(); 
-                    thisApp.bindSearchBOx(); 
-                    thisApp.dynamicHeightToElements(); 
+                    thisApp.loadDataBasedOnUserLocation();
+                    thisApp.bindSearchBOx();
+                    thisApp.dynamicHeightToElements();
                 }, 500);
             },
 
@@ -114,11 +114,12 @@
                 var thisApp = this;
 
                 if ("geolocation" in navigator) {
-                    navigator.geolocation.getCurrentPosition(function(position) { 
+                    navigator.geolocation.getCurrentPosition(function(position) {
                         thisApp.identifyCurrentLocationName(position.coords.latitude, position.coords.longitude);
                         thisApp.loadData(position.coords.latitude, position.coords.longitude);
                     }, function() {
-                        thisApp.noDataFound(default_latitude, default_longitude);
+                        thisApp.loadData(gb_latitude, gb_longitude);
+                        // thisApp.noDataFound(default_latitude, default_longitude);
                     });
                 }
             },
@@ -184,7 +185,7 @@
                                     }
                                 });
                             }
-                            
+
                             // Single search term
                             if (searchedTerm.indexOf(',') < 0 && searchedTerm.indexOf('+') < 0) {
                                 filteredData = $.grep(data, function (e) {
@@ -210,7 +211,7 @@
             },
 
             handleData: function(response) {
-                
+
                 // Before adding new markers, Clear out the old markers.
                 markers.forEach(function(marker) {
                     marker.setMap(null);
